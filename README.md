@@ -10,8 +10,9 @@ Our model learns clear hexagon grid patterns of multiple scales which share obse
 
 ![unit](assets/unit.png)
 
-The learned model is also capable of accurate long distance path integration.
+The learned model is also capable of accurate long distance path integration:
 
+![path](assets/path_integration.png)
 
 ## Dependencies
 
