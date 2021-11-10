@@ -48,7 +48,6 @@ def train(config, model, sess, output_dir):
     'loss_kernel': [],
     'loss_transformation': [],
     'loss_isometry': [],
-    'loss_isometry_diag': [],
     'loss_reg_u': []
   }
 
@@ -68,10 +67,10 @@ def train(config, model, sess, output_dir):
                  model.vel2: place_seq2['vel'],
                  model.lr: lr_epoch}
 
-    loss_total, loss_kernel, loss_transformation, loss_reg_u, loss_isometry_diag, loss_isometry, _ = sess.run(
+    loss_total, loss_kernel, loss_transformation, loss_reg_u, loss_isometry, _ = sess.run(
       [model.loss_total, model.loss_kernel,
        model.loss_transformation, model.loss_reg_u,
-       model.loss_isometry_diag, model.loss_isometry, model.apply_grads], feed_dict=feed_dict)
+       model.loss_isometry, model.apply_grads], feed_dict=feed_dict)
 
     # regularize weights
     if config.norm_weights:
@@ -84,8 +83,8 @@ def train(config, model, sess, output_dir):
     if epoch % config.log_step == 0:
       end_time = time.time()
       u = sess.run(model.u)[0]
-      log_info = '#{:s} Epoch #{:d}, loss_total: {:.4f}, loss_kernel: {:.4f}, loss_transformation: {:.4f}, loss_isometry: {:.4f}, loss_isometry_diag: {:.4f}, loss_reg_u: {:.4f}, min_u: {:.4f}, max_u: {:.4f}, time: {:.2f}s, lr: {:.4f}' \
-        .format(output_dir, epoch, loss_total, loss_kernel, loss_transformation, loss_isometry, loss_isometry_diag,
+      log_info = '#{:s} Epoch #{:d}, loss_total: {:.4f}, loss_kernel: {:.4f}, loss_transformation: {:.4f}, loss_isometry: {:.4f}, loss_reg_u: {:.4f}, min_u: {:.4f}, max_u: {:.4f}, time: {:.2f}s, lr: {:.4f}' \
+        .format(output_dir, epoch, loss_total, loss_kernel, loss_transformation, loss_isometry,
                 loss_reg_u, u.min(), u.max(), end_time - start_time, lr_epoch)
       print(log_info)
       with open(os.path.join(output_dir, 'log.txt'), "a") as f:
@@ -97,7 +96,6 @@ def train(config, model, sess, output_dir):
       stat_1['loss_kernel'].append(loss_kernel)
       stat_1['loss_transformation'].append(loss_transformation)
       stat_1['loss_isometry'].append(loss_isometry)
-      stat_1['loss_isometry_diag'].append(loss_isometry_diag)
       stat_1['loss_reg_u'].append(loss_reg_u)
 
     syn_dir = os.path.join(output_dir, 'syn')

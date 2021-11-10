@@ -8,6 +8,7 @@ import sys
 import cv2
 import imageio
 import matplotlib.cm as cm
+import math
 # if '/opt/ros/kinetic/lib/python2.7/dist-packages' in sys.path:
 #     sys.path.remove('/opt/ros/kinetic/lib/python2.7/dist-packages')
 
@@ -368,7 +369,7 @@ def visualize(model, sess, test_dir, epoch=0, final_epoch=False, result_dir=None
     for i in range(len(weights_v_value_transform)):
         weight_to_draw = weights_v_value_transform[i]
         plt.subplot(nrow, ncol, i + 1)
-        draw_heatmap_2D(weight_to_draw, shape=model.shape)
+        draw_heatmap_2D(weight_to_draw)
     plt.savefig(os.path.join(test_dir, 'weights_%04d.png' % epoch), bbox_inches='tight')
     if final_epoch:
         if not os.path.exists(result_dir):
@@ -380,7 +381,7 @@ def visualize(model, sess, test_dir, epoch=0, final_epoch=False, result_dir=None
     plt.close()
 
 
-def visualize_u(model, sess, test_dir, epoch=0):
+def visualize_u(model, sess, test_dir, epoch=0, final_epoch=False, result_dir=None):
     weights_u_value = sess.run(model.u)[0]
     if not tf.gfile.Exists(test_dir):
         tf.gfile.MakeDirs(test_dir)
@@ -394,7 +395,7 @@ def visualize_u(model, sess, test_dir, epoch=0):
     for i in range(len(weights_u_value_transform)):
         weight_to_draw = weights_u_value_transform[i]
         plt.subplot(nrow, ncol, i + 1)
-        draw_heatmap_2D(weight_to_draw, shape=model.shape)
+        draw_heatmap_2D(weight_to_draw)
     plt.savefig(os.path.join(test_dir, 'weightsu_%04d.png' % epoch), bbox_inches='tight')
     if final_epoch:
         if not os.path.exists(result_dir):

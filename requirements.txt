@@ -1,6 +1,4 @@
 imageio
 matplotlib
-tensorflow-gpu==1.14.0
 scipy
 opencv-python
-os

@@ -18,7 +18,6 @@ class GridCell(object):
     assert self.num_group * self.block_size == self.grid_cell_dim
     assert self.num_grid * self.num_grid == self.place_dim
     self.num_theta = config.num_theta
-    self.num_dtheta = config.num_dtheta
 
     self.max_dx = config.max_dx
 
