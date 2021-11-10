@@ -60,7 +60,6 @@ parser.add_argument('--noise_level', type=float, default=1.0, help='Level of the
 parser.add_argument('--log_file', type=str, default='test_log.txt', help='The output file for saving results')
 parser.add_argument('--log_step', type=int, default=20, help='Number of log iterations')
 parser.add_argument('--log_step_large', type=int, default=500, help='Number of larger log iterations')
-parser.add_argument('--log_integral_step', type=int, default=2000, help='Number of iterations to do path integral')
 
 # utils test
 parser.add_argument('--mode', type=str, default='train', help='train / visualize / path_integration / error_correction')

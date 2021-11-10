@@ -99,7 +99,6 @@ def train(config, model, sess, output_dir):
       stat_1['loss_reg_u'].append(loss_reg_u)
 
     syn_dir = os.path.join(output_dir, 'syn')
-    syn_path_dir = os.path.join(output_dir, 'syn_path')
     if epoch == 0 or (epoch + 1) % config.log_step_large == 0 or epoch == config.num_epochs - 1:
       saver.save(sess, "%s/%s" % (model_dir, 'model.ckpt'), global_step=epoch)
       if not tf.gfile.Exists(syn_dir):
@@ -138,20 +137,6 @@ def train(config, model, sess, output_dir):
 
       f.savefig(os.path.join(output_dir, 'stat.png'), bbox_inches='tight')
       plt.close(f)
-
-      if (epoch + 1) % config.log_integral_step == 0:
-        # test path integral
-        test_path_integral(model, sess, place_seq_test1, visualize=True, test_dir=syn_path_dir, epoch=epoch)
-        err = test_path_integral(model, sess, place_seq_test2)
-
-        log_info = '%s %d epoch, path integral mse: %02f' % (output_dir, epoch, err)
-        print(log_info)
-        log_file = os.path.join(syn_path_dir, 'acc.txt')
-        with open(log_file, 'a') as f:
-          print(log_info, file=f)
-        if epoch == config.num_epochs - 1:
-          with open('integral_log.txt', 'a') as f:
-            print(log_info, file=f)
 
 
 def test_path_integral(model, sess, place_seq_test, visualize=False, test_dir=None, epoch=None):
