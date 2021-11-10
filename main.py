@@ -11,7 +11,7 @@ from data import DataGenerator
 from model import GridCell
 from train import train, test_path_integral
 from utils import visualize, visualize_u, visualize_B
-
+abcd
 
 def boolean_string(s):
     if s not in {'False', 'True'}:
